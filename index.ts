@@ -2,7 +2,7 @@
  * Returns a wrapper function for easy overloading in JavaScript.
  * @param {{ [overload: string]: (...args: unknown[]) => unknown; }} overloads Overloads to use.
  */
-export default function OverloadJS<F extends (...args: unknown[]) => unknown>(overloads: {
+function OverloadJS<F extends (...args: unknown[]) => unknown>(overloads: {
     [overload: string]: (...args: unknown[]) => unknown;
 }) {
     const lexicons: {
@@ -27,9 +27,18 @@ export default function OverloadJS<F extends (...args: unknown[]) => unknown>(ov
 
     return function (...args: Parameters<F>) {
         for (const { lexicon, callback } of lexicons)
-            if (args.every((arg, i) => typeof arg === lexicon[i].type || ((arg ?? true) && lexicon[i].nullable)))
+            if (
+                args.every(
+                    (arg, i) =>
+                        typeof arg === lexicon[i].type || (typeof arg !== "boolean" && (arg ?? true) && lexicon[i].nullable)
+                )
+            )
                 return callback(...args);
 
         throw new Error(`No overload matched this call.`);
     };
 }
+
+export default OverloadJS;
+module.exports = OverloadJS;
+exports = OverloadJS;

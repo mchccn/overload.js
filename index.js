@@ -26,7 +26,9 @@ function OverloadJS(overloads) {
             args[_i] = arguments[_i];
         }
         var _loop_1 = function (lexicon, callback) {
-            if (args.every(function (arg, i) { return typeof arg === lexicon[i].type || ((arg !== null && arg !== void 0 ? arg : true) && lexicon[i].nullable); }))
+            if (args.every(function (arg, i) {
+                return typeof arg === lexicon[i].type || (typeof arg !== "boolean" && (arg !== null && arg !== void 0 ? arg : true) && lexicon[i].nullable);
+            }))
                 return { value: callback.apply(void 0, args) };
         };
         for (var _a = 0, lexicons_1 = lexicons; _a < lexicons_1.length; _a++) {
@@ -39,3 +41,5 @@ function OverloadJS(overloads) {
     };
 }
 exports["default"] = OverloadJS;
+module.exports = OverloadJS;
+exports = OverloadJS;
