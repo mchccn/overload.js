@@ -27,7 +27,8 @@ function OverloadJS(overloads) {
         }
         var _loop_1 = function (lexicon, callback) {
             if (args.every(function (arg, i) {
-                return typeof arg === lexicon[i].type || (typeof arg !== "boolean" && (arg !== null && arg !== void 0 ? arg : true) && lexicon[i].nullable);
+                return (typeof arg === lexicon[i].type && arg !== null) ||
+                    (typeof arg !== "boolean" && (arg !== null && arg !== void 0 ? arg : true) && lexicon[i].nullable);
             }))
                 return { value: callback.apply(void 0, args) };
         };

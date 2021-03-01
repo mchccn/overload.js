@@ -30,7 +30,8 @@ function OverloadJS<F extends (...args: unknown[]) => unknown>(overloads: {
             if (
                 args.every(
                     (arg, i) =>
-                        typeof arg === lexicon[i].type || (typeof arg !== "boolean" && (arg ?? true) && lexicon[i].nullable)
+                        (typeof arg === lexicon[i].type && arg !== null) ||
+                        (typeof arg !== "boolean" && (arg ?? true) && lexicon[i].nullable)
                 )
             )
                 return callback(...args);
