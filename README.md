@@ -1,6 +1,6 @@
 # overload.js
 
-![logo](./overloadjs.png)]
+![logo](./overloadjs.png)
 
 Overload.js is a micro-library here to make overloading functions incredibly easy.
 
